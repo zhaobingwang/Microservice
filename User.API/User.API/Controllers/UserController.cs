@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using User.API.Data;
 
 namespace User.API.Controllers
@@ -12,9 +13,11 @@ namespace User.API.Controllers
     public class UserController : BaseController
     {
         private UserContext _userContext;
-        public UserController(UserContext userContext)
+        private ILogger<UserController> _logger;
+        public UserController(UserContext userContext, ILogger<UserController> logger)
         {
             _userContext = userContext;
+            _logger = logger;
         }
 
         [Route("")]
@@ -26,7 +29,7 @@ namespace User.API.Controllers
                 .Include(u => u.Property)
                 .SingleOrDefault(u => u.Id == UserIdentity.UserId);
             if (user == null)
-                return NotFound();
+                throw new UserOperationException($"错误的用户上下文,Id:{UserIdentity.UserId}");
             return Json(user);
         }
 
