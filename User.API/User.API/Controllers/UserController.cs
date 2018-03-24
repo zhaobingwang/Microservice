@@ -47,7 +47,7 @@ namespace User.API.Controllers
                 _userContext.Entry(propetty).State = EntityState.Detached;
             }
 
-            var originProperties = await _userContext.UserProperties.AsNoTracking().Where(u => u.UserId == UserIdentity.UserId).ToListAsync();
+            var originProperties = await _userContext.UserProperties.AsNoTracking().Where(u => u.AppUserId == UserIdentity.UserId).ToListAsync();
             var allProperties = originProperties.Union(user.Properties).Distinct();
 
             var removedProperties = originProperties.Except(user.Properties);

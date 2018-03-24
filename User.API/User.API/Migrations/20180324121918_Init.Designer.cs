@@ -10,8 +10,8 @@ using User.API.Data;
 namespace User.API.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20180322150640_AddUserEntites")]
-    partial class AddUserEntites
+    [Migration("20180324121918_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -80,16 +80,14 @@ namespace User.API.Migrations
                     b.Property<string>("Key")
                         .HasMaxLength(100);
 
-                    b.Property<int>("UserId");
+                    b.Property<int>("AppUserId");
 
                     b.Property<string>("Value")
                         .HasMaxLength(100);
 
-                    b.Property<int?>("AppUserId");
-
                     b.Property<string>("Text");
 
-                    b.HasKey("Key", "UserId", "Value");
+                    b.HasKey("Key", "AppUserId", "Value");
 
                     b.HasIndex("AppUserId");
 
@@ -113,8 +111,9 @@ namespace User.API.Migrations
             modelBuilder.Entity("User.API.Models.UserProperty", b =>
                 {
                     b.HasOne("User.API.Models.AppUser")
-                        .WithMany("Property")
-                        .HasForeignKey("AppUserId");
+                        .WithMany("Properties")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

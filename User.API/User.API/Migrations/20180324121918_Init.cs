@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace User.API.Migrations
 {
-    public partial class AddUserEntites : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,20 +68,19 @@ namespace User.API.Migrations
                 columns: table => new
                 {
                     Key = table.Column<string>(maxLength: 100, nullable: false),
-                    UserId = table.Column<int>(nullable: false),
+                    AppUserId = table.Column<int>(nullable: false),
                     Value = table.Column<string>(maxLength: 100, nullable: false),
-                    AppUserId = table.Column<int>(nullable: true),
                     Text = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserProperities", x => new { x.Key, x.UserId, x.Value });
+                    table.PrimaryKey("PK_UserProperities", x => new { x.Key, x.AppUserId, x.Value });
                     table.ForeignKey(
                         name: "FK_UserProperities_Users_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
