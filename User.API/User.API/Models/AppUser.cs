@@ -77,6 +77,6 @@ namespace User.API.Models
         /// <summary>
         /// 用户属性列表
         /// </summary>
-        public List<UserProperty> Property { get; set; }
+        public List<UserProperty> Properties { get; set; }
     }
 }
