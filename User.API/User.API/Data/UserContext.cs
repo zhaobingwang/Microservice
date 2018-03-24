@@ -36,5 +36,7 @@ namespace User.API.Data
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<AppUser> Users { get; set; }
     }
 }

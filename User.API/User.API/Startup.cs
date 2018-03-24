@@ -41,6 +41,22 @@ namespace User.API
             }
 
             app.UseMvc();
+            //InitUserDatabase(app);
+        }
+
+        private void InitUserDatabase(IApplicationBuilder app)
+        {
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var userContext = scope.ServiceProvider.GetRequiredService<UserContext>();
+                userContext.Database.Migrate();
+
+                if (!userContext.Users.Any())
+                {
+                    userContext.Users.Add(new Models.AppUser { ProvinceId = 1, CityId = 1, Name = "no8" });
+                    userContext.SaveChanges();
+                }
+            }
         }
     }
 }
