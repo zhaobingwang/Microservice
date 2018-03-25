@@ -7,6 +7,10 @@ namespace User.API.Models
 {
     public class AppUser
     {
+        public AppUser()
+        {
+            Properties = new List<UserProperty>();
+        }
         public int Id { get; set; }
 
         /// <summary>
