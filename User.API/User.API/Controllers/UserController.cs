@@ -68,5 +68,22 @@ namespace User.API.Controllers
             _userContext.SaveChanges();
             return Json(user);
         }
+
+        /// <summary>
+        /// 检查或者创建用户（当用户手机号不存在的时候创建用户）
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
+        [Route("check-or-create")]
+        [HttpPost]
+        public async Task<IActionResult> CheckOrCreate(string phone)
+        {
+            // TODO:做手机号码格式验证
+            if (await _userContext.Users.AnyAsync(u => u.Phone == phone))
+            {
+                _userContext.Users.Add(new Models.AppUser { Phone = phone });
+            }
+            return Ok();
+        }
     }
 }
