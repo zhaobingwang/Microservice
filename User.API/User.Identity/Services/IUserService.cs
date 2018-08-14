@@ -12,6 +12,6 @@ namespace User.Identity.Services
         /// </summary>
         /// <param name="phone">手机号</param>
         /// <returns>用户Id</returns>
-        int CheckOrCreate(string phone);
+        Task<int> CheckOrCreate(string phone);
     }
 }

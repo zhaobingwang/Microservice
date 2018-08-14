@@ -40,7 +40,7 @@ namespace User.Identity.Authentication
             }
 
             //完成用户注册
-            var userId = _userService.CheckOrCreate(phone);
+            var userId = await _userService.CheckOrCreate(phone);
             if (userId <= 0)
             {
                 context.Result = errorValidationResult;
